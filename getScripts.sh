@@ -63,7 +63,12 @@ else
     exit 1
   fi 
 
-  
+  if [[ ! -e $2 || ! -d $2 ]]; then
+    :
+  else
+    echo "A directory with this path already exists, please try a different one"
+    exit 1
+  fi 
 
   echo "Scripts downloaded"
 
