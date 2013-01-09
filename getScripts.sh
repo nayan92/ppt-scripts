@@ -8,27 +8,33 @@
 
 # Second argument is the name which you would like to call the directory where the submissions will be saved.
 
-#if [ -z "$1"
+function usage_instructions {
+  echo "usage: getScripts [-p] exercise store_folder_name"
+}
 
-# This is the path to the folder where you store all the submissions.
-storeDir=~/Documents/ThirdYear/PPT-UTA/$2
+if [ -z "$1" ]; then
+  usage_instructions
+else
+  # This is the path to the folder where you store all the submissions.
+  storeDir=~/Documents/ThirdYear/PPT-UTA/$2
 
-echo "Creating target directory..."
-mkdir $storeDir
+  echo "Creating target directory..."
+  mkdir $storeDir
 
-echo "Downloading submissions archive..."
-wget -O $storeDir/autotest.tgz --user=nc1610 --ask-password https://www.doc.ic.ac.uk/~tora/firstyear/ppt/group/2/exercise/$1/autotest.tgz
+  echo "Downloading submissions archive..."
+  wget -O $storeDir/autotest.tgz --user=nc1610 --ask-password https://www.doc.ic.ac.uk/~tora/firstyear/ppt/group/2/exercise/$1/autotest.tgz
 
-echo "Extracting archive..."
-tar -xf $storeDir/autotest.tgz -C $storeDir
+  echo "Extracting archive..."
+  tar -xf $storeDir/autotest.tgz -C $storeDir
 
-echo "Removing archive..."
-rm -f $storeDir/autotest.tgz
+  echo "Removing archive..."
+  rm -f $storeDir/autotest.tgz
 
-echo "Printing submissions..."
-for f in $storeDir/*.pdf
-do
-  lpr -P ICTMono -o HPStaplerOptions=1diagonal $f
-done
+  echo "Printing submissions..."
+  for f in $storeDir/*.pdf
+  do
+    lpr -P ICTMono -o HPStaplerOptions=1diagonal $f
+  done
 
-echo "Complete!"
+  echo "Complete!"
+fi
