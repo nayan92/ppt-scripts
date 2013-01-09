@@ -16,7 +16,7 @@
 function usage_instructions {
   case $1 in
     1)
-      echo "usage: getScripts [-p] exercise store_folder_name"
+      echo "usage: getScripts [-p] exercise_number store_folder_name"
       ;;
     2)
       echo "incorrect usage"
@@ -42,12 +42,21 @@ else
         ;;
       \?)
         echo "invalid option"
+        exit 
         ;;
     esac
   done
 
   shift $((OPTIND-1))
   echo "argument 1 is: $1"
+
+  if [ $# -ne 2 ]; then
+    echo "Incorrect number of arguments parameters"
+    usage_instructions 1
+    exit 1
+  fi
+
+  
 
   echo "Scripts downloaded"
 
