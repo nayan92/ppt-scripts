@@ -56,6 +56,13 @@ else
     exit 1
   fi
 
+  if [ $1 -eq $1 2> /dev/null ]; then
+    :
+  else
+    echo "First argument should be an integer (ie. the exerice number)"
+    exit 1
+  fi 
+
   
 
   echo "Scripts downloaded"
