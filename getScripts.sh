@@ -24,9 +24,14 @@ function usage_instructions {
   esac
 }
 
-# True if required to print the submissions
-# False otherwise
+
+# True if required to print the submissions,
+# False otherwise.
 to_print=false
+
+# This is the directory which the second argument (where the
+# scripts will be saved) is relative to.
+base_dir=~/
 
 # If there are no arguments, print usage instructions.
 # Otherwise get the scripts.
@@ -42,28 +47,38 @@ else
         ;;
       \?)
         echo "invalid option"
-        exit 
+        exit 1
         ;;
     esac
   done
 
+  # remove options from arguments so that we are left with only
+  # the mass_arguments.
   shift $((OPTIND-1))
-  echo "argument 1 is: $1"
 
+  # Check that there are the correct number of arguments.
   if [ $# -ne 2 ]; then
     echo "Incorrect number of arguments parameters"
     usage_instructions 1
     exit 1
   fi
 
-  if [ $1 -eq $1 2> /dev/null ]; then
+  # The exercise number.
+  ex_num=$1
+
+  # The path to store the scripts.
+  store_dir=$base_dir$2
+
+  # Check the exercise number is an integer.
+  if [ $ex_num -eq $ex_num 2> /dev/null ]; then
     :
   else
     echo "First argument should be an integer (ie. the exerice number)"
     exit 1
   fi 
 
-  if [[ ! -e $2 || ! -d $2 ]]; then
+  # Check that the path to store the scripts doesn't already exist.
+  if [[ ! -e $store_dir || ! -d $store_dir ]]; then
     :
   else
     echo "A directory with this path already exists, please try a different one"
