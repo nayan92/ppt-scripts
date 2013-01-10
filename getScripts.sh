@@ -1,5 +1,4 @@
 #!/usr/bin/bash
-# THERE IS NO ERROR CHECKING ON THE ARGUMENTS!
 
 # First argument is the exercise number which can be found from the url of the
 # page where you would usually download the scripts submissions. It is of the form:
@@ -30,8 +29,9 @@ function usage_instructions {
 to_print=false
 
 # This is the directory which the second argument (where the
-# scripts will be saved) is relative to.
+# submissions will be saved) is relative to.
 base_dir=~/
+
 
 # If there are no arguments, print usage instructions.
 # Otherwise get the scripts.
@@ -39,6 +39,7 @@ if [ $# -eq 0 ]; then
   usage_instructions 1
 else
 
+  # Manage options.
   while getopts ":p" opt; do
     case $opt in
       p)
@@ -66,7 +67,7 @@ else
   # The exercise number.
   ex_num=$1
 
-  # The path to store the scripts.
+  # The path to store the submissions.
   store_dir=$base_dir$2
 
   # Check the exercise number is an integer.
@@ -90,26 +91,31 @@ else
   if $to_print; then
     echo "Scripts printed"
   fi
-#  # This is the path to the folder where you store all the submissions.
-#  storeDir=~/Documents/ThirdYear/PPT-UTA/$2
 
-#  echo "Creating target directory..."
-#  mkdir $storeDir
+  # Create the folder where the submissions will be stored.
+  echo "Creating target directory..."
+  mkdir $store_dir
 
-#  echo "Downloading submissions archive..."
-#  wget -O $storeDir/autotest.tgz --user=nc1610 --ask-password https://www.doc.ic.ac.uk/~tora/firstyear/ppt/group/2/exercise/$1/autotest.tgz
+  # Download submissions tar file to the folder.
+  echo "Downloading submissions archive..."
+  wget -O $store_dir/autotest.tgz --user=nc1610 --ask-password https://www.doc.ic.ac.uk/~tora/firstyear/ppt/group/2/exercise/$1/autotest.tgz
 
-#  echo "Extracting archive..."
-#  tar -xf $storeDir/autotest.tgz -C $storeDir
+  # Extract the submissions for the tar file.
+  echo "Extracting archive..."
+  tar -xf $store_dir/autotest.tgz -C $store_dir
 
-#  echo "Removing archive..."
-#  rm -f $storeDir/autotest.tgz
+  # Delete the tar file. It isn't required anymore.
+  echo "Removing archive..."
+  rm -f $store_dir/autotest.tgz
 
-#  echo "Printing submissions..."
-#  for f in $storeDir/*.pdf
-#  do
-#    lpr -P ICTMono -o HPStaplerOptions=1diagonal $f
-#  done
+  # If the print option was specified, print the submissions.
+  if $to_print; then
+    echo "Printing submissions..."
+    for f in $store_dir/*.pdf
+    do
+      lpr -P ICTMono -o HPStaplerOptions=1diagonal $f
+    done
+  fi
 
-#  echo "Complete!"
+  echo "Completed successfully!"
 fi
