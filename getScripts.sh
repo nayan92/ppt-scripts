@@ -105,8 +105,9 @@ else
     echo "Incorrect password"
     exit 1
   # Check for other errors
-  elif [ $? -ne 0]; then
+  elif [ $? -ne 0 ]; then
     echo "An error occurred. Perhaps you entered the wrong exercise number?"
+    exit 1
   fi
 
   # Extract the submissions for the tar file.
