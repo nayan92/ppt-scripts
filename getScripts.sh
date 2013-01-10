@@ -13,14 +13,7 @@
 # TODO: add what the -p option means
 #
 function usage_instructions {
-  case $1 in
-    1)
-      echo "usage: getScripts [-p] exercise_number store_folder_name"
-      ;;
-    2)
-      echo "incorrect usage"
-      ;;
-  esac
+  echo "usage: getScripts [-p] exercise_number store_folder_name"
 }
 
 
@@ -36,7 +29,7 @@ base_dir=~/
 # If there are no arguments, print usage instructions.
 # Otherwise get the scripts.
 if [ $# -eq 0 ]; then
-  usage_instructions 1
+  usage_instructions
 else
 
   # Manage options.
@@ -44,10 +37,10 @@ else
     case $opt in
       p)
         to_print=true
-        echo "-p was triggered"
+       # echo "-p was triggered"
         ;;
       \?)
-        echo "invalid option"
+       # echo "invalid option"
         exit 1
         ;;
     esac
@@ -60,7 +53,6 @@ else
   # Check that there are the correct number of arguments.
   if [ $# -ne 2 ]; then
     echo "Incorrect number of arguments parameters"
-    usage_instructions 1
     exit 1
   fi
 
