@@ -98,7 +98,16 @@ else
 
   # Download submissions tar file to the folder.
   echo "Downloading submissions archive..."
-  wget -O $store_dir/autotest.tgz --user=nc1610 --ask-password https://www.doc.ic.ac.uk/~tora/firstyear/ppt/group/2/exercise/$1/autotest.tgz
+  wget -O $store_dir/autotest.tgz --quiet --user=nc1610 --ask-password https://www.doc.ic.ac.uk/~tora/firstyear/ppt/group/2/exercise/$ex_num/autotest.tgz
+  wget_status=$?
+  # Check invalid password
+  if [ $wget_status -eq 6 ]; then
+    echo "Incorrect password"
+    exit 1
+  # Check for other errors
+  elif [ $? -ne 0]; then
+    echo "An error occurred. Perhaps you entered the wrong exercise number?"
+  fi
 
   # Extract the submissions for the tar file.
   echo "Extracting archive..."
