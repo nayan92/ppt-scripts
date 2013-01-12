@@ -22,8 +22,9 @@ usage_instructions() {
 to_print=false
 
 # This is the directory which the second argument (where the
-# submissions will be saved) is relative to.
-base_dir=~/
+# submissions will be saved) is relative to. Currently set to
+# the folder that the script was called from.
+base_dir=$PWD/
 
 
 # If there are no arguments, print usage instructions.
