@@ -19,7 +19,7 @@ The script can be executed in the following way:
 2. **./getScripts username group-number exercise-number storage-folder**  
    This will download all the submissions for the exercise specified by exercise-number
    and put them in the folder specified by storage-folder (Note: this folder will be
-   relative to where to you called this script).
+   relative to where to you ran the script from).
 
 3. **./getScripts -p username group-number exercise-number storage-folder**  
    Same as (2.), but will also print the submissions for you (Printer is ICTMono).
