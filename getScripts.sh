@@ -50,7 +50,8 @@ else
 
   # remove options from arguments so that we are left with only
   # the mass_arguments.
-  shift $((OPTIND-1))
+  shiftAmount=`expr $OPTIND - 1`
+  shift $shiftAmount
 
   # Check that there are the correct number of arguments.
   if [ $# -ne 2 ]; then
@@ -73,7 +74,7 @@ else
   fi 
 
   # Check that the path to store the scripts doesn't already exist.
-  if [[ ! -e $store_dir || ! -d $store_dir ]]; then
+  if [ ! -e $store_dir -a ! -d $store_dir ]; then
     :
   else
     echo "A directory with this path already exists, please try a different one"
@@ -93,7 +94,7 @@ else
     echo "Incorrect password"
     exit 1
   # Check for other errors
-  elif [ $? -ne 0 ]; then
+  elif [ $wget_status -ne 0 ]; then
     echo "An error occurred. Perhaps you entered the wrong exercise number?"
     exit 1
   fi
