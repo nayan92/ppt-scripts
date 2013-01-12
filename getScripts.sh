@@ -1,12 +1,5 @@
 #!/bin/sh
 
-# First argument is the exercise number which can be found from the url of the
-# page where you would usually download the scripts submissions. It is of the form:
-# https://www.doc.ic.ac.uk/~tora/firstyear/ppt/group/2/exercise/number
-# where number is the exercise number.
-
-# Second argument is the name which you would like to call the directory where the submissions will be saved.
-
 #
 # This function will print to the screen instructions on how to
 # use the command.
