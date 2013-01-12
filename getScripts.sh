@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/sh
 
 # First argument is the exercise number which can be found from the url of the
 # page where you would usually download the scripts submissions. It is of the form:
@@ -10,10 +10,10 @@
 #
 # This function will print to the screen instructions on how to
 # use the command.
-# TODO: add what the -p option means
 #
-function usage_instructions {
+usage_instructions() {
   echo "usage: getScripts [-p] exercise_number store_folder_name"
+  return 0
 }
 
 
