@@ -13,6 +13,7 @@
 #
 usage_instructions() {
   echo "usage: getScripts [-p] exercise_number store_folder_name"
+  echo "  see README for more details."
   return 0
 }
 
@@ -78,12 +79,6 @@ else
     echo "A directory with this path already exists, please try a different one"
     exit 1
   fi 
-
-  echo "Scripts downloaded"
-
-  if $to_print; then
-    echo "Scripts printed"
-  fi
 
   # Create the folder where the submissions will be stored.
   echo "Creating target directory..."
