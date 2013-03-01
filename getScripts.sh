@@ -69,7 +69,17 @@ else
   echo ""
 
   # The page where the submissions are.
-  exercise_page=`wget --user=$user --password=$password -O - https://www.doc.ic.ac.uk/~tora/firstyear/ppt/group/$group/exercise/$ex_num`
+  exercise_page=`wget --quiet --user=$user --password=$password -O - https://www.doc.ic.ac.uk/~tora/firstyear/ppt/group/$group/exercise/$ex_num`
+  wget_status=$?
+  # Check invalid password
+  if [ $wget_status -eq 6 ]; then
+    echo "Incorrect password"
+    exit 1
+  # Check for other errors
+  elif [ $wget_status -ne 0 ]; then
+    echo "An error occurred. Perhaps you entered the wrong group number or exercise number?"
+    exit 1
+  fi
 
   # The name of the exercise.
   ex_name=`echo $exercise_page | grep -o '<div class="main_content">.*summary'  | sed 's/\(<div class="main_content"><h1>\| summary\)//g' | sed 's/ /-/g'`
@@ -115,7 +125,7 @@ else
     exit 1
   # Check for other errors
   elif [ $wget_status -ne 0 ]; then
-    echo "An error occurred. Perhaps you entered the wrong exercise number?"
+    echo "An error occurred. Perhaps you entered the wrong group number or exercise number?"
     exit 1
   fi
 
