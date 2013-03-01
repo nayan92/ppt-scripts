@@ -5,7 +5,7 @@
 # use the command.
 #
 usage_instructions() {
-  echo "usage: getScripts [-p] user_id group_number exercise_number store_folder_name"
+  echo "usage: getScripts [-p] user_id group_number exercise_number"
   echo "  see README for more details."
   return 0
 }
@@ -47,7 +47,7 @@ else
   shift $shiftAmount
 
   # Check that there are the correct number of arguments.
-  if [ $# -ne 4 ]; then
+  if [ $# -ne 3 ]; then
     echo "Incorrect number of arguments parameters"
     exit 1
   fi
@@ -61,8 +61,21 @@ else
   # The exercise number.
   ex_num=$3
 
+  # Request password from the user.
+  echo "Password: "
+  stty -echo
+  read password
+  stty echo
+  echo ""
+
+  # The page where the submissions are.
+  exercise_page=`wget --user=$user --password=$password -O - https://www.doc.ic.ac.uk/~tora/firstyear/ppt/group/$group/exercise/$ex_num`
+
+  # The name of the exercise.
+  ex_name=`echo $exercise_page | grep -o '<div class="main_content">.*summary'  | sed 's/\(<div class="main_content"><h1>\| summary\)//g' | sed 's/ /-/g'`
+
   # The path to store the submissions.
-  store_dir=$base_dir$4
+  store_dir=$base_dir$ex_num-$ex_name
 
   # Check that the group number is an integer.
   if [ $group -eq $group 2> /dev/null ]; then
@@ -94,7 +107,7 @@ else
 
   # Download submissions tar file to the folder.
   echo "Downloading submissions archive..."
-  wget -O $store_dir/autotest.tgz --quiet --user=$user --ask-password https://www.doc.ic.ac.uk/~tora/firstyear/ppt/group/$group/exercise/$ex_num/autotest.tgz
+  wget -O $store_dir/autotest.tgz --quiet --user=$user --password=$password https://www.doc.ic.ac.uk/~tora/firstyear/ppt/group/$group/exercise/$ex_num/autotest.tgz
   wget_status=$?
   # Check invalid password
   if [ $wget_status -eq 6 ]; then
